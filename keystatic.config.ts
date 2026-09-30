@@ -22,10 +22,13 @@ const components = {
   }),
 };
 
+const storageMode = import.meta.env.PUBLIC_KEYSTATIC_STORAGE ?? (import.meta.env.PROD ? 'github' : 'local');
+
 export default config({
-  storage: import.meta.env.PROD
-    ? { kind: 'github', repo: 'a-ahandani/ahandani.com' }
-    : { kind: 'local' },
+  storage:
+    storageMode === 'github'
+      ? { kind: 'github', repo: 'a-ahandani/ahandani.com' }
+      : { kind: 'local' },
   ui: {
     brand: { name: 'AHANDANI.' },
   },

@@ -1,0 +1,68 @@
+---
+title: "Generating a Table of Contents!"
+date: 2023-06-12
+excerpt: "Introduction: When working with lengthy content or documentation, a table of contents can greatly enhance user experience by providing an organized navigation system. In this blog post, we’ll delve into the TableOfContents, a tool for generating a table of contents. We’ll explore its key methods and functionality to gain a deeper understanding of how it…"
+categories:
+  - "Projects"
+  - "Tutorials"
+tags:
+  - "library"
+  - "react"
+  - "typescript"
+---
+
+### Introduction:
+
+When working with lengthy content or documentation, a table of contents can greatly enhance user experience by providing an organized navigation system. In this blog post, we’ll delve into the [`TableOfContents`](https://github.com/a-ahandani/ah-toc), a tool for generating a table of contents. We’ll explore its key methods and functionality to gain a deeper understanding of how it works. Let’s get started!
+
+{% embed src="https://codesandbox.io/embed/ah-toc-75y2mh?fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.ts&theme=dark" title="ah-toc" /%}
+
+### Understanding the TableOfContents Class:
+
+The `TableOfContents` library revolves around the `TableOfContents` class, which acts as the main entry point for generating a table of contents. Let’s explore some of its essential properties and methods:
+
+1.  `content: HTMLElement | null`: This property represents the content section of the page. It is obtained by querying the DOM using the provided `contentSelector` option.
+2.  `nodeList: NodeType[] | undefined`: This property stores an array of `NodeType` objects. Each `NodeType` object represents a heading element found within the content section.
+3.  `nodeObject: NodeType | null`: This property holds the hierarchical structure of the headings, forming a tree-like representation.
+4.  `markup: HTMLElement | null`: This property represents the generated table of contents markup.
+5.  `options?: OptionsType`: This property holds the options passed to the `TableOfContents` class during initialization.
+6.  `settings: OptionsType`: This property contains the merged default options and user-defined options.
+7.  `init()`: This method serves as the entry point for generating the table of contents. It invokes other internal methods to find headings, create a hierarchical structure, generate the markup, and append it to the specified container.
+
+### Generating the Table of Contents:
+
+Let’s explore the sequence of steps involved in generating the table of contents using the `TableOfContents` class:
+
+1.  **Finding Headings:** The `findAllHeaders` method is responsible for querying the DOM and finding the headings based on the provided attributes (`h1`, `h2`, `h3`). It creates an array of `NodeType` objects, representing each heading element found within the content section.
+2.  **Creating Hierarchy:** The `createHierarchy` method takes the array of `NodeType` objects and constructs a hierarchical structure based on the headings’ levels. It assigns child nodes to their respective parent nodes, forming a tree-like structure.
+3.  **Generating Markup:** The `generateMarkup` method recursively traverses the hierarchical structure and generates the HTML markup for the table of contents. It creates `<ul>` and `<li>` elements, and for each heading, it creates an `<a>` element with appropriate attributes.
+4.  **Appending Markup:** Once the markup is generated, it is appended to the specified container element using the `appendTo` option. The generated table of contents becomes part of the DOM, ready for display.
+
+```
+// Initializing the TableOfContents
+const toc = new TableOfContents({
+  attributes: ['h1', 'h2', 'h3'],
+  appendTo: 'toc',
+  contentSelector: 'content',
+});
+
+// Finding Headings
+private findAllHeaders = (): void => {
+  // ...
+};
+
+// Creating Hierarchy
+private createHierarchy = (): void => {
+  // ...
+};
+
+// Generating Markup
+private generateMarkup = (node: NodeType | null): HTMLElement | null => {
+  // ...
+};
+
+// Appending Markup
+public init = (): void => {
+  // ...
+};
+```

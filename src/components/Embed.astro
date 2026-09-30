@@ -1,0 +1,11 @@
+---
+interface Props {
+  src: string;
+  title?: string;
+}
+const { src, title = 'Embedded content' } = Astro.props;
+---
+
+<div class="embed">
+  <iframe src={src} title={title} loading="lazy" allowfullscreen></iframe>
+</div>

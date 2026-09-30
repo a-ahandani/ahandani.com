@@ -1,0 +1,71 @@
+---
+import '@fontsource/pt-serif/700.css';
+import '@fontsource/poppins/300.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  showAvatar?: boolean;
+}
+
+const siteName = 'Ahandani.com';
+const {
+  title,
+  description = 'Ahmad Esmaeilzadeh Ahandani, software developer. Notes on web development, projects, and tutorials.',
+  showAvatar = true,
+} = Astro.props;
+const pageTitle = title ? `${title} | ${siteName}` : "Ahmad Esmaeilzadeh Ahandani's website";
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/meta.png', Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <div class="topbar container">
+      <a href="https://github.com/a-ahandani/ahandani.com" class="topbar-link"><Icon name="github" /> Source</a>
+      <a href="/" class="topbar-link" aria-label="Home"><Icon name="home" /></a>
+    </div>
+    <header class="site-header container">
+      <a href="/" class="brand">
+        {showAvatar && <img class="avatar" src="/profile.jpeg" alt="Ahmad Ahandani" width="58" height="58" />}
+        <span class="brand-text">
+          <span class="brand-name">AHANDANI.</span>
+          <span class="brand-role">Software developer</span>
+        </span>
+      </a>
+      <span class="divider" aria-hidden="true"></span>
+      <nav class="nav">
+        <a href="/categories/Projects">Projects</a>
+        <a href="/pages/about">About</a>
+      </nav>
+    </header>
+    <main class="container">
+      <slot />
+    </main>
+    <footer class="site-footer container">
+      <span>© {new Date().getFullYear()} Ahmad Esmaeilzadeh Ahandani</span>
+    </footer>
+  </body>
+</html>

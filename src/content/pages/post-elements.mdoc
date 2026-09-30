@@ -1,0 +1,82 @@
+---
+title: "Typography test page with a very long H1 element so that we can test line height"
+---
+
+WordPress editor fields support multiple typographic styles, as demonstrated on this page. Here is a simple paragraph of text. It includes a [link](http://google.com) to another page. It is always best to use descriptive link text when linking to a page. To visit the [Google homepage](http://google.com), click here; to visit the Google homepage, click here.
+
+There is **emboldened text** in the next paragraph, as well as some *italicized text.* We can also use inline codes to test `some code` inside the paragraph. Obviously, you shouldn’t use underlined text since it makes the text look like a hyperlink. We can also set ~some text with strikethrough~ to test whether that style works as well. Let’s check that the Blockquote style is working before we proceed to heading styles:
+
+> In short, I believe that mobile development is currently broken. Products today must be made for at least 3 platforms — the web, native iOS and native Android. If you look at the best apps from every category, they are implemented using native technologies. The engineers for every category usually have different skillsets, which creates “engineering silos” where the same product has to be implemented 3 different times. This is terribly inefficient.
+> 
+> [Tal Kol](https://medium.com/@talkol), ex-Head of Mobile Engineering at [Wix.com](https://www.wix.com/) in [an interview with React Amsterdam](https://medium.com/@ReactAmsterdam/speaker-interview-tal-kol-head-of-mobile-engineering-at-wix-com-abc37c5e516b)
+
+## Heading 2 – Similarly, this will probably push to two lines as well
+
+Headings are used to differentiate blocks of text based on their importance. Page titles are always set in Heading 1 in WordPress, since it is the most important heading on the page. H1 tags are important for on-page SEO.
+
+> this is a new blockquote.
+
+### Heading 3
+
+Pellentesque sapien metus, faucibus eget massa vel, dictum suscipit mauris. Proin tempor metus est, vel aliquet risus pharetra sed. Curabitur nec semper nisi, vitae egestas turpis. Nunc sit amet magna dignissim tortor suscipit dignissim.
+
+Now let’s add a horizontal line below this paragraph to check that they are working.
+
+* * *
+
+#### Heading 4
+
+**Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Code blocks:
+
+```jsx
+  const {
+    __typename,
+    title,
+    content,
+    comments,
+    databaseId,
+    categories,
+    tags,
+    author,
+    date,
+    commentStatus,
+    featuredImage,
+    uri,
+  } = useLoaderData<Node>();
+```
+
+Ok, we’re making good progress but we still have a few more default WordPress styles to look at.
+
+##### Heading 5 – Video player
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+
+Hosted video file:
+
+{% video src="/images/posts/file_example_MP4_480_1_5MG.mp4" /%}
+
+Here is a youtube video.
+
+{% embed src="https://www.youtube.com/embed/9FDV-VCq5XE?feature=oembed" title="Introducing Remix" /%}
+
+-   Unordered lists are written in HTML using the <ul>tag with ul standing for Unordered List\*
+-   It is unordered as each list item has a graphical ‘bullet’ as opposed to a number
+-   Unordered lists can be used used for lots of things and should always be used if any form or ordering in not required
+-   Like any other typographical element, unordered lists can display [superscript](https://www.w3schools.com/tags/tag_sup.asp) and [subscript](https://www.w3schools.com/tags/tag_sub.asp) elements. Superscript elements are often used to show footnotes‚ like this\[1\] while subscript elements are often used in element names like this: H20
+
+Obviously there will be times when you need an ordered list, also known as a numbered list. For those situations you need the [HTML <ol> tag](https://www.w3schools.com/tags/tag_ol.asp) with ol standing for Ordered List:
+
+1.  As you can see, ordered lists include numbers
+2.  These numbers will automatically adjust themselves as you add, edit and remove list items to keep the list in numeric order
+3.  Despite the existence of this wonderful tag, people still seem to like to add 1.) 2.) and 3.) to the start of paragraphs rather than use an ordered list.
+
+With that all sorted, we’ll take a quick look at H6 and the last few styles.
+
+###### THIS TEXT IS SET IN HEADING 6. IT WILL BE USEFUL FOR SMALL PRINT.
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+
+-   If you need to insert a symbol into your text, use the ‘Special characters’ icon. It looks like an omega sign. From there you’ll have access to all manner of symbols such as ™ and ©. You’ll also find accented characters such as Ä and ã as well as fractions like¼ and ¾.
+-   When pasting text from another source, be sure to click the ‘Paste as text’ icon before you paste it in to the WordPress editor. This will ensure any formatting is removed. Failure to do this can lead to superfluous HTML being inserted into your pages
+-   To remove formatting from selections of text, use the ‘Clear formatting’ icon
+-   Err away from using the left align, right align and centre align options. This website has been programmed to align text correctly based on its context so you should never need to align text. If you are tempted to use the ‘Justify’ option you probably shouldn’t be allowed to use a computer ever again!

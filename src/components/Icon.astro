@@ -1,0 +1,19 @@
+---
+interface Props {
+  name: 'calendar' | 'folder' | 'tag' | 'home' | 'github' | 'list';
+}
+const { name } = Astro.props;
+const paths: Record<Props['name'], string> = {
+  calendar: 'M8 2v3M16 2v3M3.5 9h17M5 4.5h14a1.5 1.5 0 0 1 1.5 1.5v13a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19V6A1.5 1.5 0 0 1 5 4.5ZM8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01',
+  folder: 'M3.5 7A1.5 1.5 0 0 1 5 5.5h4l2 2h8A1.5 1.5 0 0 1 20.5 9v9A1.5 1.5 0 0 1 19 19.5H5A1.5 1.5 0 0 1 3.5 18V7Z',
+  tag: 'M3.5 12.5v-8a1 1 0 0 1 1-1h8l8 8-9 9-8-8ZM8 8h.01',
+  home: 'M4 10.5 12 4l8 6.5V20h-5.5v-6h-5v6H4v-9.5Z',
+  github: 'M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.3-.5-1.5.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3',
+  list: 'M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01',
+};
+const solid = name === 'home' || name === 'github';
+---
+
+<svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill={solid ? 'currentColor' : 'none'} stroke={solid ? 'none' : 'currentColor'} stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d={paths[name]} />
+</svg>

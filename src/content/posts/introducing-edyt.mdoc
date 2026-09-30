@@ -1,0 +1,49 @@
+---
+title: "Introducing Edyt"
+date: 2026-05-31
+excerpt: "I have been building a macOS desktop app called Edyt. It watches for text selections in any application, shows a floating toolbar near your cursor, and lets you rewrite, explain, translate, or run custom AI prompts against the selected text. The result pastes back into the source app. No copy-paste. No switching windows."
+categories:
+  - "General"
+  - "Projects"
+tags: []
+---
+
+I have been building a macOS desktop app called Edyt. It watches for text selections in any application, shows a floating toolbar near your cursor, and lets you rewrite, explain, translate, or run custom AI prompts against the selected text. The result pastes back into the source app. No copy-paste. No switching windows.
+
+{% video src="/images/posts/hero.mp4" /%}
+
+### The Problem
+
+Every time I wanted to improve a sentence, I had to select it, copy it, switch to a browser tab, paste it into ChatGPT, wait, copy the result, switch back, and paste. For one sentence it was annoying. For a day of writing it was a constant context switch.
+
+Grammarly fixes grammar and tone, but its tone options are fixed and you cannot define your own. Raycast AI is fast but lives inside a command palette, not at the selection level. ChatGPT and Claude are powerful, but if you want a specific tone you have to describe it again every time you start a new chat.
+
+I wanted a toolbar that appears when I select text, does the work, puts the result back, and follows *my* exact instructions.
+
+### Prompts I Define, Not Presets I Pick From
+
+The three preset actions, Rewrite, Explain, and Translate, ship with sensible defaults, but you can replace the prompt behind any of them with your own. Write exactly how you want the AI to behave: your tone, your terminology, your constraints. There is no dropdown of three tone options. There is a text field where you put whatever instruction you want.
+
+There is also a Use Prompt action that opens a panel with every prompt and template you have, your own saved ones plus a curated library. Pick one, apply it, get the result back. Prompts sync to your account so you build a library that matches how you actually write.
+
+### How It Works
+
+Select text in any macOS app. A native observer layer detects the selection via Accessibility APIs and positions a lightweight Electron toolbar near your cursor. The desktop app calls a Go backend that handles the AI processing, sync for rewrites and streaming for explanations and prompts, and pastes the result back. The stack is Electron and React for the desktop, Go for the API, Next.js for the landing page, Supabase for auth and Postgres, and a native Node addon for macOS selection observation and paste.
+
+### What I Was Concerned About
+
+The biggest mistake was trying to build for both Windows and macOS at the same time. The observer, the part that watches text selections, is fundamentally different on each platform. I was fixing a bug on one platform and introducing two more on the other. The volume of bugs was eating me alive. I dropped Windows support and focused entirely on macOS. The app shipped faster and the code got cleaner.
+
+Permissions were a harder problem, and not for technical reasons. The app needs Accessibility and Input Monitoring access to detect selected text and paste results back. This is the same level of access that lets an app read and control your entire system. I asked myself: would *I* trust a tool like this, built by someone I do not know, with that much access?
+
+The honest answer is that I would hesitate too. That hesitation is fair. So I had to think about trust as a design constraint. The onboarding explains what each permission is for, one at a time, only after the user has seen what the app does. The initial flow used to drop people straight into a full screen permission failure before they had seen anything useful. We moved permissions into a guided step that comes after context. You should know what you are giving access to and why.
+
+### Current State
+
+Edyt is live at [edyt.app](https://edyt.app). The macOS app is downloadable for Apple Silicon. The toolbar does four things: Rewrite, Explain, Translate, and Use Prompt, each configurable with your own prompt text. Login goes through OAuth and results stream back to the app.
+
+There is still work to do. The toolbar appearance rule is invisible to users and nothing explains why nothing happens on an invalid selection. Template discovery is fragmented. Windows support is paused, not abandoned, but it will need a dedicated effort.
+
+### Why I Built It
+
+AI writing tools should not live in a browser tab or force you to pick from a list of tones someone else defined. Text editing happens everywhere, in Notion, in Slack, in VS Code, in email, and the AI should show up where you are, follow *your* instructions, and get out of the way. Edyt is an attempt at that.

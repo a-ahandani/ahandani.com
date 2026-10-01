@@ -41,6 +41,7 @@ const personLd = {
   sameAs: profile.links.map((l) => l.url),
   worksFor: { '@type': 'Organization', name: 'Edyt', url: edytUrl },
 };
+const initials = profile.name.split(/\s+/).map((w) => w[0]).join('').toUpperCase();
 ---
 
 <!doctype html>
@@ -79,10 +80,9 @@ const personLd = {
     <div class="frame-rail frame-rail-left" aria-hidden="true"></div>
     <div class="frame-rail frame-rail-right" aria-hidden="true"></div>
     <header class="site-header frame-band">
-      <span class="frame-cell frame-cell-left" aria-hidden="true"><span class="wordmark-dot"></span></span>
+      <span class="frame-cell frame-cell-left"><a href="/" class="wordmark" aria-label={`${profile.name}, home`}>{initials}</a></span>
       <div class="frame-middle">
         <div class="wrap header-inner">
-          {!isHome && <a href="/" class="wordmark" aria-label={`${profile.name}, home`}>{profile.name}</a>}
           <nav class="nav" aria-label="Main">
             {nav.map((item) => (
               <a href={item.href} aria-current={item.active ? 'page' : undefined}>{item.label}</a>

@@ -21,36 +21,42 @@
     {
       "name": "Edyt",
       "url": "https://edyt.app",
+      "role": "Founder and Software Engineer",
       "years": "2024 – Present",
       "description": "AI writing assistant for macOS and Windows"
     },
     {
       "name": "Cloudbeds",
       "url": "https://www.cloudbeds.com",
+      "role": "Senior Software Engineer",
       "years": "2023 – Present",
       "description": "Hospitality management platform for hotels and hostels"
     },
     {
       "name": "Yocale",
       "url": "https://www.yocale.com",
+      "role": "Senior Frontend Engineer",
       "years": "2021 – 2023",
       "description": "Online booking and business software for appointment-based businesses"
     },
     {
       "name": "Mega",
       "url": "",
+      "role": "Staff Engineer",
       "years": "2017 – 2021",
       "description": "IT and e-commerce consultancy"
     },
     {
       "name": "Fanava DP",
       "url": "",
+      "role": "Frontend Developer",
       "years": "2016 – 2017",
       "description": "Internet service provider"
     },
     {
       "name": "Shomalgan",
       "url": "",
+      "role": "Web Developer",
       "years": "2013 – 2016",
       "description": "Web design and development studio"
     }
@@ -73,6 +79,12 @@
       "url": "https://github.com/a-ahandani/remixpress",
       "years": "2021",
       "description": "Remix and GraphQL front end for WordPress as a headless CMS"
+    },
+    {
+      "name": "Chargoon",
+      "url": "",
+      "years": "2018",
+      "description": "Client portal for Chargoon customers, built with Vue.js and Vuex"
     },
     {
       "name": "ahandani.com",

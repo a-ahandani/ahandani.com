@@ -78,6 +78,7 @@ export default config({
           fields.object({
             name: fields.text({ label: 'Name' }),
             url: fields.text({ label: 'URL (optional)' }),
+            role: fields.text({ label: 'Role' }),
             years: fields.text({ label: 'Years' }),
             description: fields.text({ label: 'What the company does' }),
           }),

@@ -27,6 +27,7 @@
   --frame: 64px;
   --frame-x: var(--frame);
   --rule: 2px;
+  --pencil-fill: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60' preserveAspectRatio='none'%3E%3Cfilter id='g' x='-10%25' y='-10%25' width='120%25' height='120%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' seed='7' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0.72' result='g'/%3E%3CfeComposite in='SourceGraphic' in2='g' operator='in'/%3E%3C/filter%3E%3Cpath d='M1.2 1.1 L 58.9 1.3 L 58.8 58.9 L 1.1 58.8 Z' fill='black' filter='url(%23g)'/%3E%3C/svg%3E");
   --narrow: 720px;
   --radius: 14px;
 }
@@ -221,23 +222,37 @@ body {
 }
 
 .wordmark {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: -0.015em;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 5px;
+  border: 5px solid transparent;
+  border-image: var(--pencil-frame) 7 round;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: #ffffff;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.wordmark-dot {
-  width: 18px;
-  height: 18px;
-  background-clip: padding-box;
-  background: var(--accent);
-  border: 5px solid transparent;
-  border-image: var(--pencil-frame) 7 round;
+.wordmark::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  z-index: -1;
+  background: #1c39bb;
+  -webkit-mask: var(--pencil-fill) center / 100% 100% no-repeat;
+  mask: var(--pencil-fill) center / 100% 100% no-repeat;
+}
+
+.wordmark:hover {
+  color: #ffffff;
 }
 
 .nav {
@@ -463,6 +478,10 @@ body {
 
 .listing .chips {
   margin-bottom: 36px;
+}
+
+.listing .page-title + .post-list {
+  margin-top: 48px;
 }
 
 .back-link {
@@ -792,6 +811,18 @@ body {
   font-weight: 600;
 }
 
+.work-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.work-role {
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
 .work-desc {
   font-size: 15.5px;
   color: var(--text-2);
@@ -956,7 +987,7 @@ body {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
-  .work-desc {
+  .work-detail {
     grid-column: 1 / -1;
     grid-row: 2;
   }
@@ -971,7 +1002,7 @@ body {
   }
 
   .site-header {
-    grid-template-columns: 0 minmax(0, 1fr) var(--frame);
+    grid-template-columns: var(--frame) minmax(0, 1fr) var(--frame);
   }
 
   body {
@@ -983,9 +1014,6 @@ body {
     padding: 0 20px;
   }
 
-  .wordmark {
-    font-size: 18px;
-  }
 
   .nav {
     gap: 20px;

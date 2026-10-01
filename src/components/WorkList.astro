@@ -2,6 +2,7 @@
 interface Item {
   name: string;
   url: string;
+  role?: string;
   years: string;
   description: string;
 }
@@ -30,7 +31,10 @@ const { id, label, items } = Astro.props;
               item.name
             )}
           </span>
-          <span class="work-desc">{item.description}</span>
+          <span class="work-detail">
+            {item.role && <span class="work-role">{item.role}</span>}
+            <span class="work-desc">{item.description}</span>
+          </span>
           <span class="work-years">{item.years}</span>
         </li>
       ))

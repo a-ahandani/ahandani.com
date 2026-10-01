@@ -1,18 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import PostList from '../components/PostList.astro';
-import { getPosts, categoryUrl } from '../lib/posts';
+import { getPosts } from '../lib/posts';
 
 const posts = await getPosts();
-const categories = [...new Set(posts.flatMap((p) => p.data.categories))].sort();
 ---
 
 <Base title="Writing" description="Notes on building Edyt, frontend architecture, and tools I make along the way.">
   <section class="listing wrap">
     <h1 class="page-title">Notes and articles</h1>
-    <ul class="chips chips-links" aria-label="Categories">
-      {categories.map((c) => <li><a href={categoryUrl(c)}>{c}</a></li>)}
-    </ul>
     <PostList posts={posts} />
   </section>
 </Base>

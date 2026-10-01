@@ -1,7 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import Icon from '../components/Icon.astro';
 import PostList from '../components/PostList.astro';
 import { getPosts } from '../lib/posts';
 
@@ -25,7 +24,6 @@ const posts = (await getPosts()).slice(0, 5);
     <section class="home-writing" aria-labelledby="writing-label">
       <div class="home-writing-head">
         <h2 id="writing-label" class="eyebrow">Writing</h2>
-        <a class="text-link" href="/posts">All posts <Icon name="arrow-right" size={14} /></a>
       </div>
       <PostList posts={posts} />
     </section>

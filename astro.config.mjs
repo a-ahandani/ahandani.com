@@ -14,6 +14,7 @@ export default defineConfig({
   adapter: isDev ? undefined : cloudflare(),
   build: { format: 'file' },
   redirects: {
+    '/posts': '/writing',
     '/about': '/work',
     '/pages/about': '/work',
   },

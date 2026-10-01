@@ -875,18 +875,23 @@ body {
   margin-bottom: 28px;
 }
 
+.letter-name {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
 .home-writing {
   max-width: calc(var(--wrap) - 56px);
   margin: 88px auto 0;
 }
 
 .home-writing-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 12px;
   position: relative;
+  padding-bottom: 12px;
   margin-bottom: 8px;
 }
 
@@ -895,24 +900,15 @@ body {
   position: absolute;
   left: 0;
   right: 0;
+  bottom: -3px;
   height: 6px;
   background: var(--persian-blue);
   -webkit-mask: var(--pencil-h) repeat-x left center / 640px 6px;
   mask: var(--pencil-h) repeat-x left center / 640px 6px;
   pointer-events: none;
-  bottom: -3px;
 }
 
 .home-writing-head .eyebrow {
-  margin: 0;
-}
-
-.letter-name {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: clamp(40px, 6vw, 72px);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
   margin: 0;
 }
 

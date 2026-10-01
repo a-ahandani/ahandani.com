@@ -17,7 +17,7 @@ const { title, date, excerpt, tags, cover } = post.data;
 
 <Base title={title} description={excerpt || undefined} type="article">
   <article class="article wrap-narrow">
-    <a class="back-link" href="/posts" aria-label="All writing" title="All writing"><Icon name="arrow-left" size={17} /></a>
+    <a class="back-link" href="/writing" aria-label="All writing" title="All writing"><Icon name="arrow-left" size={17} /></a>
     <header class="article-header">
       <p class="article-meta">
         <time datetime={date.toISOString()}>{formatDate(date)}</time>

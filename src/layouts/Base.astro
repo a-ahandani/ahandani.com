@@ -27,7 +27,7 @@ const isHome = path === '/' || path === '/index.html';
 const edytUrl = 'https://edyt.app';
 
 const nav = [
-  { label: 'Writing', href: '/posts', active: path.startsWith('/posts') || path.startsWith('/categories') || path.startsWith('/tags') },
+  { label: 'Writing', href: '/writing', active: ['/writing', '/posts', '/categories', '/tags'].some((p) => path.startsWith(p)) },
   { label: 'Work', href: '/work', active: path.startsWith('/work') },
 ];
 

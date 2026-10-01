@@ -1,7 +1,7 @@
 ---
-import Base from '../../layouts/Base.astro';
-import PostList from '../../components/PostList.astro';
-import { getPosts, categoryUrl } from '../../lib/posts';
+import Base from '../layouts/Base.astro';
+import PostList from '../components/PostList.astro';
+import { getPosts, categoryUrl } from '../lib/posts';
 
 const posts = await getPosts();
 const categories = [...new Set(posts.flatMap((p) => p.data.categories))].sort();

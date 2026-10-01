@@ -18,7 +18,7 @@ const { name, posts } = Astro.props as { name: string; posts: Post[] };
 
 <Base title={`#${name}`}>
   <section class="listing wrap">
-    <a class="back-link" href="/posts" aria-label="All writing" title="All writing"><Icon name="arrow-left" size={17} /></a>
+    <a class="back-link" href="/writing" aria-label="All writing" title="All writing"><Icon name="arrow-left" size={17} /></a>
     <h1 class="page-title">#{name}</h1>
     <PostList posts={posts} />
   </section>

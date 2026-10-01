@@ -3,7 +3,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import Toc from '../../components/Toc.astro';
-import { getPosts, formatDate, categoryUrl, tagUrl, type Post } from '../../lib/posts';
+import { getPosts, formatDate, tagUrl, type Post } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -12,38 +12,31 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props as { post: Post };
 const { Content, headings } = await render(post);
-const { title, date, excerpt, categories, tags, cover } = post.data;
+const { title, date, excerpt, tags, cover } = post.data;
 ---
 
-<Base title={title} description={excerpt || undefined}>
-  <article class="post">
-    <h1 class="post-title">{title}</h1>
-    <p class="meta post-meta">
-      <span class="meta-group">
-        <Icon name="calendar" />
+<Base title={title} description={excerpt || undefined} type="article">
+  <article class="article wrap-narrow">
+    <a class="back-link" href="/posts" aria-label="All writing" title="All writing"><Icon name="arrow-left" size={17} /></a>
+    <header class="article-header">
+      <p class="article-meta">
         <time datetime={date.toISOString()}>{formatDate(date)}</time>
-      </span>
-      {
-        categories.length > 0 && (
-          <span class="meta-group">
-            <Icon name="folder" />
-            {categories.map((c) => <a href={categoryUrl(c)}>{c}</a>)}
-          </span>
-        )
-      }
-      {
-        tags.length > 0 && (
-          <span class="meta-group">
-            <Icon name="tag" />
-            {tags.map((t) => <a href={tagUrl(t)}>{t}</a>)}
-          </span>
-        )
-      }
-    </p>
-    {cover && <img class="cover" src={cover} alt="" />}
+      </p>
+      <h1 class="article-title">{title}</h1>
+    </header>
+    {cover && <img class="article-cover" src={cover} alt="" />}
     <Toc headings={headings} />
-    <div class="content">
+    <div class="prose">
       <Content />
     </div>
+    {
+      tags.length > 0 && (
+        <ul class="chips chips-links article-tags" aria-label="Tags">
+          {tags.map((t) => (
+            <li><a href={tagUrl(t)}>#{t}</a></li>
+          ))}
+        </ul>
+      )
+    }
   </article>
 </Base>

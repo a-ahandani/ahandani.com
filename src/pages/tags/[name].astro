@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import PostList from '../../components/PostList.astro';
 import { getPosts, type Post } from '../../lib/posts';
 
@@ -16,6 +17,9 @@ const { name, posts } = Astro.props as { name: string; posts: Post[] };
 ---
 
 <Base title={`#${name}`}>
-  <h1 class="page-title">#{name}</h1>
-  <PostList posts={posts} />
+  <section class="listing wrap">
+    <a class="back-link" href="/posts" aria-label="All writing" title="All writing"><Icon name="arrow-left" size={17} /></a>
+    <h1 class="page-title">#{name}</h1>
+    <PostList posts={posts} />
+  </section>
 </Base>

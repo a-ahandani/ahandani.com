@@ -1,4 +1,4 @@
-import { config, collection, fields } from '@keystatic/core';
+import { config, collection, singleton, fields } from '@keystatic/core';
 import { block } from '@keystatic/core/content-components';
 
 const images = {
@@ -30,7 +30,70 @@ export default config({
       ? { kind: 'github', repo: 'a-ahandani/ahandani.com' }
       : { kind: 'local' },
   ui: {
-    brand: { name: 'AHANDANI.' },
+    brand: { name: 'Ahmad Ahandani' },
+    navigation: {
+      Site: ['home', 'work', 'profile'],
+      Content: ['posts', 'pages'],
+    },
+  },
+  singletons: {
+    home: singleton({
+      label: 'Home letter',
+      path: 'src/content/site/home',
+      format: { contentField: 'content' },
+      entryLayout: 'content',
+      schema: {
+        greeting: fields.text({ label: 'Heading' }),
+        content: fields.markdoc({ label: 'Letter' }),
+      },
+    }),
+    work: singleton({
+      label: 'Work page',
+      path: 'src/content/site/work',
+      format: { contentField: 'content' },
+      entryLayout: 'content',
+      schema: {
+        title: fields.text({ label: 'Title' }),
+        description: fields.text({ label: 'Description (search previews)', multiline: true }),
+        content: fields.markdoc({ label: 'Content' }),
+      },
+    }),
+    profile: singleton({
+      label: 'Profile',
+      path: 'src/content/site/profile',
+      format: { data: 'json' },
+      schema: {
+        name: fields.text({ label: 'Name' }),
+        role: fields.text({ label: 'Role line' }),
+        intro: fields.text({ label: 'Short bio (search and social previews)', multiline: true }),
+        email: fields.text({ label: 'Email' }),
+        links: fields.array(
+          fields.object({
+            label: fields.text({ label: 'Label' }),
+            url: fields.url({ label: 'URL' }),
+          }),
+          { label: 'Links', itemLabel: (props) => props.fields.label.value },
+        ),
+        workplaces: fields.array(
+          fields.object({
+            name: fields.text({ label: 'Name' }),
+            url: fields.text({ label: 'URL (optional)' }),
+            years: fields.text({ label: 'Years' }),
+            description: fields.text({ label: 'What the company does' }),
+          }),
+          { label: 'Workplaces (Work page)', itemLabel: (props) => props.fields.name.value },
+        ),
+        projects: fields.array(
+          fields.object({
+            name: fields.text({ label: 'Name' }),
+            url: fields.text({ label: 'URL (optional)' }),
+            years: fields.text({ label: 'Year' }),
+            description: fields.text({ label: 'What it is' }),
+          }),
+          { label: 'Projects (Work page)', itemLabel: (props) => props.fields.name.value },
+        ),
+      },
+    }),
   },
   collections: {
     posts: collection({

@@ -1,0 +1,39 @@
+---
+interface Item {
+  name: string;
+  url: string;
+  years: string;
+  description: string;
+}
+
+interface Props {
+  id: string;
+  label: string;
+  items: Item[];
+}
+
+const { id, label, items } = Astro.props;
+---
+
+<section class="name-list" aria-labelledby={`${id}-label`}>
+  <h2 id={`${id}-label`} class="eyebrow">{label}</h2>
+  <ul class="work-list">
+    {
+      items.map((item) => (
+        <li>
+          <span class="work-name">
+            {item.url ? (
+              <a href={item.url} target="_blank" rel="noopener">
+                {item.name}
+              </a>
+            ) : (
+              item.name
+            )}
+          </span>
+          <span class="work-desc">{item.description}</span>
+          <span class="work-years">{item.years}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>

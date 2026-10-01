@@ -1,26 +1,46 @@
 ---
-import '@fontsource/pt-serif/700.css';
-import '@fontsource/poppins/300.css';
-import '@fontsource/poppins/400.css';
-import '@fontsource/poppins/500.css';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/source-serif-4';
+import '@fontsource-variable/source-serif-4/wght-italic.css';
+import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
+import profile from '../content/site/profile.json';
 
 interface Props {
   title?: string;
   description?: string;
-  showAvatar?: boolean;
+  type?: 'website' | 'article';
 }
 
-const siteName = 'Ahandani.com';
 const {
   title,
-  description = 'Ahmad Esmaeilzadeh Ahandani, software developer. Notes on web development, projects, and tutorials.',
-  showAvatar = true,
+  description = `${profile.name}, ${profile.role.toLowerCase()}. ${profile.intro}`,
+  type = 'website',
 } = Astro.props;
-const pageTitle = title ? `${title} | ${siteName}` : "Ahmad Esmaeilzadeh Ahandani's website";
+
+const pageTitle = title ? `${title} · ${profile.name}` : `${profile.name} · ${profile.role}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/meta.png', Astro.site);
+const path = Astro.url.pathname;
+const isHome = path === '/' || path === '/index.html';
+const edytUrl = 'https://edyt.app';
+
+const nav = [
+  { label: 'Writing', href: '/posts', active: path.startsWith('/posts') || path.startsWith('/categories') || path.startsWith('/tags') },
+  { label: 'Work', href: '/work', active: path.startsWith('/work') },
+];
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  jobTitle: profile.role,
+  url: 'https://ahandani.com',
+  email: `mailto:${profile.email}`,
+  sameAs: profile.links.map((l) => l.url),
+  worksFor: { '@type': 'Organization', name: 'Edyt', url: edytUrl },
+};
 ---
 
 <!doctype html>
@@ -28,9 +48,20 @@ const ogImage = new URL('/meta.png', Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={profile.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
@@ -41,31 +72,76 @@ const ogImage = new URL('/meta.png', Astro.site);
     <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="/favicon/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    {isHome && <script type="application/ld+json" set:html={JSON.stringify(personLd)} />}
   </head>
   <body>
-    <div class="topbar container">
-      <a href="https://github.com/a-ahandani/ahandani.com" class="topbar-link"><Icon name="github" /> Source</a>
-      <a href="/" class="topbar-link" aria-label="Home"><Icon name="home" /></a>
-    </div>
-    <header class="site-header container">
-      <a href="/" class="brand">
-        {showAvatar && <img class="avatar" src="/profile.jpeg" alt="Ahmad Ahandani" width="58" height="58" />}
-        <span class="brand-text">
-          <span class="brand-name">AHANDANI.</span>
-          <span class="brand-role">Software developer</span>
-        </span>
-      </a>
-      <span class="divider" aria-hidden="true"></span>
-      <nav class="nav">
-        <a href="/categories/Projects">Projects</a>
-        <a href="/pages/about">About</a>
-      </nav>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="frame-rail frame-rail-left" aria-hidden="true"></div>
+    <div class="frame-rail frame-rail-right" aria-hidden="true"></div>
+    <header class="site-header frame-band">
+      <span class="frame-cell frame-cell-left" aria-hidden="true"><span class="wordmark-dot"></span></span>
+      <div class="frame-middle">
+        <div class="wrap header-inner">
+          {!isHome && <a href="/" class="wordmark" aria-label={`${profile.name}, home`}>{profile.name}</a>}
+          <nav class="nav" aria-label="Main">
+            {nav.map((item) => (
+              <a href={item.href} aria-current={item.active ? 'page' : undefined}>{item.label}</a>
+            ))}
+          </nav>
+        </div>
+      </div>
+      <div class="frame-cell frame-cell-right">
+        <button type="button" class="theme-toggle" aria-label="Switch theme" title="Switch theme">
+          <Icon name="moon" size={17} class="theme-icon-moon" />
+          <Icon name="sun" size={17} class="theme-icon-sun" />
+        </button>
+      </div>
     </header>
-    <main class="container">
+    <main id="main" class="frame-main">
       <slot />
     </main>
-    <footer class="site-footer container">
-      <span>© {new Date().getFullYear()} Ahmad Esmaeilzadeh Ahandani</span>
+    <footer class="site-footer frame-band">
+      <span class="frame-cell frame-cell-left" aria-hidden="true"></span>
+      <div class="frame-middle">
+        <div class="wrap footer-inner">
+          <p>© {new Date().getFullYear()} {profile.name}</p>
+          <ul class="footer-links">
+            <li><a href={`mailto:${profile.email}`}>Email</a></li>
+            {profile.links.map((l) => (
+              <li><a href={l.url} rel="me noopener" target="_blank">{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <span class="frame-cell frame-cell-right" aria-hidden="true"></span>
     </footer>
+    <script>
+      const root = document.documentElement;
+      const dark = window.matchMedia('(prefers-color-scheme: dark)');
+      const current = () => (root.dataset.theme as 'light' | 'dark' | undefined) ?? (dark.matches ? 'dark' : 'light');
+      const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+
+      const sync = () => {
+        const theme = current();
+        const next = theme === 'dark' ? 'light' : 'dark';
+        button?.setAttribute('aria-label', `Switch to ${next} theme`);
+        button?.setAttribute('title', `Switch to ${next} theme`);
+        document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+          meta.setAttribute('content', theme === 'dark' ? '#121211' : '#ffffff');
+        });
+      };
+
+      button?.addEventListener('click', () => {
+        const next = current() === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch {}
+        sync();
+      });
+
+      dark.addEventListener('change', sync);
+      sync();
+    </script>
   </body>
 </html>

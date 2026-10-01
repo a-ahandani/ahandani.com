@@ -13,6 +13,10 @@ export default defineConfig({
   site: 'https://ahandani.com',
   adapter: isDev ? undefined : cloudflare(),
   build: { format: 'file' },
+  redirects: {
+    '/about': '/work',
+    '/pages/about': '/work',
+  },
   integrations: [
     react(),
     markdoc(),

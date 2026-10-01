@@ -22,4 +22,19 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { posts, pages };
+const home = defineCollection({
+  loader: glob({ pattern: 'home.mdoc', base: './src/content/site' }),
+  schema: z.object({
+    greeting: z.string(),
+  }),
+});
+
+const work = defineCollection({
+  loader: glob({ pattern: 'work.mdoc', base: './src/content/site' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().default(''),
+  }),
+});
+
+export const collections = { posts, pages, home, work };

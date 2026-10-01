@@ -1,0 +1,27 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import WorkList from '../components/WorkList.astro';
+import profile from '../content/site/profile.json';
+
+const work = await getEntry('work', 'work');
+if (!work) throw new Error('Missing src/content/site/work.mdoc');
+const { Content } = await render(work);
+
+---
+
+<Base title={work.data.title} description={work.data.description || undefined}>
+  <article class="article wrap-narrow">
+    <header class="article-header">
+      <h1 class="article-title">{work.data.title}</h1>
+    </header>
+    {work.body?.trim() && (
+      <div class="prose">
+        <Content />
+      </div>
+    )}
+
+    <WorkList id="workplaces" label="Workplaces" items={profile.workplaces} />
+    <WorkList id="projects" label="Projects" items={profile.projects} />
+  </article>
+</Base>

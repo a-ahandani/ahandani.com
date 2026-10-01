@@ -1,5 +1,4 @@
 ---
-import Icon from './Icon.astro';
 import { formatDate, type Post } from '../lib/posts';
 
 interface Props {
@@ -11,15 +10,16 @@ const { posts } = Astro.props;
 <ul class="post-list">
   {
     posts.map((post) => (
-      <li class="post-item">
-        <h2 class="post-item-title">
-          <a href={`/posts/${post.id}`}>{post.data.title}</a>
-        </h2>
-        <p class="meta">
-          <Icon name="calendar" />
-          <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
-        </p>
-        {post.data.excerpt && <p class="excerpt">{post.data.excerpt}</p>}
+      <li>
+        <a class="post-row" href={`/posts/${post.id}`}>
+          <time class="post-date" datetime={post.data.date.toISOString()}>
+            {formatDate(post.data.date)}
+          </time>
+          <span class="post-main">
+            <span class="post-title-link">{post.data.title}</span>
+            {post.data.excerpt && <span class="post-excerpt">{post.data.excerpt}</span>}
+          </span>
+        </a>
       </li>
     ))
   }

@@ -1,19 +1,47 @@
 ---
+type Name = 'github' | 'linkedin' | 'x' | 'mail' | 'arrow' | 'arrow-right' | 'arrow-left' | 'pin' | 'sun' | 'moon';
+
 interface Props {
-  name: 'calendar' | 'folder' | 'tag' | 'home' | 'github' | 'list';
+  name: Name;
+  size?: number;
+  class?: string;
 }
-const { name } = Astro.props;
-const paths: Record<Props['name'], string> = {
-  calendar: 'M8 2v3M16 2v3M3.5 9h17M5 4.5h14a1.5 1.5 0 0 1 1.5 1.5v13a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19V6A1.5 1.5 0 0 1 5 4.5ZM8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01',
-  folder: 'M3.5 7A1.5 1.5 0 0 1 5 5.5h4l2 2h8A1.5 1.5 0 0 1 20.5 9v9A1.5 1.5 0 0 1 19 19.5H5A1.5 1.5 0 0 1 3.5 18V7Z',
-  tag: 'M3.5 12.5v-8a1 1 0 0 1 1-1h8l8 8-9 9-8-8ZM8 8h.01',
-  home: 'M4 10.5 12 4l8 6.5V20h-5.5v-6h-5v6H4v-9.5Z',
-  github: 'M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.3-.5-1.5.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3',
-  list: 'M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01',
+
+const { name, size = 16, class: className } = Astro.props;
+
+const solid: Partial<Record<Name, string>> = {
+  github:
+    'M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.3-.5-1.5.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3',
+  linkedin:
+    'M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2ZM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2ZM7.1 20.5H3.5V9h3.6v11.5ZM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0Z',
+  x: 'M18.2 2.3h3.4l-7.4 8.4 8.7 11.5h-6.8l-5.3-7-6.1 7H1.3l7.9-9L.8 2.3h7l4.8 6.4 5.6-6.4Zm-1.2 17.9h1.9L7 4.2H5l12 16Z',
 };
-const solid = name === 'home' || name === 'github';
+
+const outline: Partial<Record<Name, string>> = {
+  mail: 'M3.5 6.5h17v11h-17zM3.5 7l8.5 6.5L20.5 7',
+  arrow: 'M7 17 17 7M9 7h8v8',
+  'arrow-left': 'M19 12H5M11 6l-6 6 6 6',
+  'arrow-right': 'M5 12h14M13 6l6 6-6 6',
+  sun: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4',
+  moon: 'M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z',
+  pin: 'M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
+};
+
+const d = solid[name] ?? outline[name] ?? '';
+const isSolid = name in solid;
 ---
 
-<svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill={solid ? 'currentColor' : 'none'} stroke={solid ? 'none' : 'currentColor'} stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <path d={paths[name]} />
+<svg
+  class:list={['icon', className]}
+  viewBox="0 0 24 24"
+  width={size}
+  height={size}
+  fill={isSolid ? 'currentColor' : 'none'}
+  stroke={isSolid ? 'none' : 'currentColor'}
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <path d={d} />
 </svg>

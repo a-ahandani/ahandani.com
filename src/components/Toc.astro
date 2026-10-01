@@ -1,6 +1,4 @@
 ---
-import Icon from './Icon.astro';
-
 interface Props {
   headings: { depth: number; slug: string; text: string }[];
 }
@@ -10,19 +8,16 @@ const minDepth = Math.min(...items.map((h) => h.depth));
 ---
 
 {
-  items.length > 1 && (
-    <nav class="toc" aria-label="Table of contents">
-      <p class="toc-title">Table Of Contents</p>
-      <ul>
+  items.length > 2 && (
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
         {items.map((h) => (
-          <li class={`toc-depth-${h.depth - minDepth}`}>
-            <a href={`#${h.slug}`}>{h.text}</a>
+          <li class={h.depth > minDepth ? 'toc-sub' : undefined}>
+            <a href={`#${h.slug}`}>{h.text.replace(/:$/, '')}</a>
           </li>
         ))}
-      </ul>
-      <p class="toc-footer">
-        <Icon name="list" /> Table of contents generator
-      </p>
+      </ol>
     </nav>
   )
 }

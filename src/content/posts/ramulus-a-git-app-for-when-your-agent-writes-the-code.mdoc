@@ -1,7 +1,7 @@
 ---
-title: "Ramulus: A Git App for When Your AI Agent Writes the Code"
+title: "Ramulus: The Git App I Kept Wishing For"
 date: 2026-11-11
-excerpt: "When building is cheap, why not build the things I always wanted? Ramulus is one of them: a visual Git app for when your AI agent writes the code. Every branch in one graph, every change as a diff you can edit, and you decide what gets committed."
+excerpt: "Most of my code is written by an agent now, and that turned Git into the tool I care about most. Ramulus is the visual Git app I kept wishing for: every project and branch in one window, diffs I can fix while I review them, and the agent right there beside the graph."
 cover: "/images/posts/ramulus.jpg"
 categories:
   - "Projects"
@@ -11,53 +11,47 @@ tags:
   - "rust"
 ---
 
-Ramulus is a Git app for when your AI agent writes the code. You see every branch in one graph, review every change as a diff, and decide what gets committed.
+I've always kept a short list of tools I wished someone would build. For years it just sat there. Each one meant months of evenings, and there were never enough evenings.
 
-```sh
-npx ramulus
-```
+This year the math changed. With an agent doing most of the typing, a first version takes a day. So I went back to the list.
 
-Run it inside a repository, or point it at a folder full of them. No account, no cloud, no tracking.
+One thing had been on it forever: a GitKraken for coding.
 
-### Why I Built It
+### Where the Job Moved
 
-When building is cheap, why not build the things I always wanted?
+Most of my code is written by an agent now. Almost all of it.
 
-One of them was a GitKraken for coding: a visual Git app shaped around the way I work now. When an agent writes 99 percent of the code, Git becomes the most important tool in the loop. Every change still lands in a repository, and good review matters more than ever.
+That moved my job. The part that is still mine is the review: what changed, on which branch, and whether it's safe to commit. Git used to be the place where I saved my work. Now it's the place where I decide what the work is.
 
-Vibe coding needs a visual place to keep control of the flow: which branch the agent is on, what it touched, and what is safe to commit. Ramulus puts that on one screen.
+I wanted one window for that. The branches, the diffs, and the agent writing them, all in the same place.
 
-### What I Wanted, and What It Does
+### What It Does
 
-**To code while I review.** I always wished I could change code right where I review it. In Ramulus the working side of every diff is editable. Fix a line, save with ⌘S, and stage or discard one block of changes at a time. The diffs are built on Monaco, the editor inside VS Code.
+Every wish on that list turned into a feature:
 
-**A file browser that shows the changes.** The Files tab lists the whole working tree and marks every changed file, and the folders they sit in, so I can see at a glance where the agent has been.
+- **All your projects in one sidebar.** Open a folder like `~/code` and Ramulus finds every repository in it. Each one shows its branch, its changes and what it needs to push or pull. Pull all fast-forwards every one it safely can.
+- **Every branch in one graph.** Local and remote branches, tags, stashes and your uncommitted work, with how far each branch is ahead or behind.
+- **Your agent, right under the graph.** Press ⌃\` to open Claude Code, Codex, Gemini CLI or opencode in a tab. It uses the sign-in it already has, and Ramulus asks before using it, so there's no token to paste anywhere.
+- **A file browser that shows the changes.** The Files tab marks every file the agent changed, and every folder that file sits in. You can see where it has been without asking it.
+- **Fix code while you review it.** Diffs are built on Monaco, the editor inside VS Code. For anything you haven't committed yet, fix the line right in the diff and save with ⌘S. Then stage or discard one block of changes at a time.
+- **Commit messages written for you.** One click drafts a commit message or a branch name, ready for you to edit. Merging is a drag: drop a branch onto a commit to merge or rebase it.
+- **Terminals that start in the right place.** Every terminal opens in the folder of the project you're looking at. It stays alive in the background, so switching back is instant.
+- **Your agent sessions, where you can see them.** The Agents list holds every agent and shell tab. Claude Code tabs are named after their conversation, and a small mark shows which one just finished. Close the app, open it the next day, and the same conversations are waiting.
+- **Pull requests and CI.** Read a pull request's comments and checks through the GitHub CLI, see how each pushed commit's CI run went, and hand a merge conflict to your agent with a prompt you can edit first.
 
-**A terminal that starts in the right place.** Every terminal opens in the folder of the repository you're looking at. Terminals stay alive in the background, so switching between them is instant.
+### A Branch With Legs
 
-**All my related projects in one view.** Point Ramulus at a folder like `~/code` and it finds the repositories inside and offers to open each one. They sit in a sidebar that shows each one's branch, its changes and what it needs to push or pull. Pull all or Fetch all updates every one of them at once.
+I started on October 27. The first commit called it Ramify: a local Git client with a lane graph. By the end of that day it also had a macOS installer, a version that runs entirely in the browser, an npm helper, and a new name.
 
-**To see my chat sessions.** The Agents list on the left holds every agent and shell tab. Claude Code tabs are named after the conversation, and a mark tells you when one finishes while you're looking elsewhere, so several agents can run at once. Close the app and open it again: same projects, same terminals, same Claude Code conversations.
+Ramulus is Latin for a small branch. The icon is a stick insect, which is basically a small branch with legs.
 
-**No tokens to hand over.** Ramulus finds Claude Code, Codex, Gemini CLI or opencode on your computer and asks before using any of them. Each one uses its own sign-in, so there's no API key to paste anywhere.
+### Two Weeks Later
 
-**Commit messages, and more.** One click drafts a commit message or a branch name, ready for you to edit. A merge conflict can go to your agent with a prompt you can change first. Pull requests show their comments and checks through the GitHub CLI you're already signed in to, and each pushed commit shows how its GitHub Actions run went. Merging is a drag: drop a branch onto a commit to merge or rebase it.
+Two weeks and 127 commits in, Ramulus is at 0.15.0.
 
-### Day One
+It runs on the git you already have, so your SSH keys, hooks and credential helpers just work. It only listens on 127.0.0.1, with a new token every time it starts. No account, no cloud, no tracking.
 
-The first commit, on October 27, was called Ramify: a local git client with a lane graph. By the end of that day it had a macOS installer, a browser version that runs git in JavaScript, and an npm helper that serves the same interface over the git already installed on your computer.
-
-Later that day I renamed it Ramulus. It's Latin for a small branch, and the icon is a stick insect, which is basically a branch with legs.
-
-### How It Runs
-
-`npx ramulus` starts a small local server on top of your own git, so your SSH keys, credential helpers, hooks and LFS work exactly as they do in your terminal. The desktop app for macOS, Windows and Linux runs the same server and updates itself. The server only listens on 127.0.0.1, and every request needs a token that is new each time it starts. Nothing leaves your computer unless you ask for it.
-
-There's also a browser version that needs nothing installed. It runs git in JavaScript, so it's slower, works only in Chromium browsers, can't use SSH and leaves out rebase, cherry-pick and revert.
-
-### Two Weeks In
-
-Ramulus reached 0.15.0 on November 10, two weeks and 127 commits in. The latest releases added preview tabs, so files you only glance at don't pile up, and fixed typing in Farsi.
+There's a desktop app for macOS, Windows and Linux that updates itself. There's also a browser version that needs nothing installed. It's slower, works only in Chromium browsers, and leaves out rebase, cherry-pick and revert.
 
 ### Try It
 
@@ -65,4 +59,6 @@ Ramulus reached 0.15.0 on November 10, two weeks and 127 commits in. The latest 
 npx ramulus ~/code
 ```
 
-You need Node 20 or newer and git. There's also a [download for macOS, Windows and Linux](https://github.com/a-ahandani/ramulus/releases/latest) and a [website](https://a-ahandani.github.io/ramulus/). It's MIT licensed, and issues and feedback are welcome on [GitHub](https://github.com/a-ahandani/ramulus).
+You need Node 20 or newer and git. There's also a [download for macOS, Windows and Linux](https://github.com/a-ahandani/ramulus/releases/latest) and a [website](https://a-ahandani.github.io/ramulus/).
+
+It's MIT licensed. If a tool like this has been on your list too, give it a try, and tell me what's missing on [GitHub](https://github.com/a-ahandani/ramulus).

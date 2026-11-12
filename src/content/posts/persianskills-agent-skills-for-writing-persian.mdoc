@@ -1,0 +1,66 @@
+---
+title: "persianskills: Agent Skills for Writing Persian"
+date: 2026-11-11
+excerpt: "persianskills is a set of agent skills that help AI write Persian correctly for readers in Iran, Afghanistan and Tajikistan. It started with a native speaker's review of Edyt's Persian translation and now holds 30 skills, 21 of them from 13 other authors with their licenses kept."
+cover: "/images/posts/persianskills.jpg"
+categories:
+  - "Projects"
+tags:
+  - "persian"
+  - "ai"
+  - "localization"
+---
+
+persianskills is a set of agent skills that help AI write Persian correctly, for readers in Iran, Afghanistan and Tajikistan. They work with Claude Code, Codex, Cursor and any agent that reads a `SKILL.md` file. The full directory, including skills by other authors, is at [persianskills.com](https://persianskills.com).
+
+### Where It Started
+
+It started with Edyt. A native Persian speaker reviewed Edyt's Persian translation, and that review became `persian-localization`, a skill for translating product and UI text into any Persian variety.
+
+But "Persian" is not one audience.
+
+### Three Readers, Not One
+
+The same language is written differently in three countries:
+
+- **Iran:** Persian (فارسی), in the Persian script.
+- **Afghanistan:** Dari (دری), in the same script with different words. A hospital is شفاخانه instead of بیمارستان, and a university is پوهنتون instead of دانشگاه.
+- **Tajikistan:** Tajik (тоҷикӣ), written in Cyrillic, with six letters that get lost on Russian keyboards: ғ ӣ қ ӯ ҳ ҷ.
+
+An AI model that writes good Iranian Persian can still get Dari and Tajik wrong. So there is a skill for each: `dari-writing`, `tajik-writing`, and the writing, translation and orthography skills for Iranian Persian.
+
+### Other People's Work, Credited
+
+Other people had already written Persian skills. Of the 30 skills in the repo, 21 come from 13 other authors. Each one keeps its author's license file, and `CREDITS.md` lists its source repo, the exact commit, its license and everything I changed.
+
+Where a skill had no license, I didn't copy it. I wrote my own for five of those topics and credit the original as the inspiration. A few tools that can't be copied, like MCP servers with no skill file or skills under a license that doesn't allow redistribution, are listed on the site as links only.
+
+### One Standard for Every Skill
+
+Thirty skills from 14 authors only work together if they follow the same rules. The rules are a skill themselves, `persian-skill-standard`: the name (`persian-`, `dari-` or `tajik-` plus a plain topic), the folder layout, the frontmatter and the credit.
+
+A script checks every skill against it:
+
+```bash
+node scripts/check-skills.mjs
+```
+
+A second skill, `persian-skill-evaluation`, tests a new skill before it joins, including a run with the skill and without it, and ends with a verdict.
+
+### The Details Matter
+
+- `persian-orthography` follows the Persian Academy's «دستور خطّ فارسی» (1401), with page references, so a correction can be checked against its source.
+- Every skill that bundles or recommends a font uses [Sahel](https://github.com/rastikerdar/sahel-font) by Saber Rastikerdar. Where an upstream skill used another font, I switched it and said so in the credits.
+
+### Try It
+
+```bash
+npx skills add a-ahandani/persianskills                         # every skill
+npx skills add a-ahandani/persianskills --skill dari-writing    # one skill
+```
+
+In Claude Code you can also add it as a plugin. For ChatGPT, Gemini and other chat apps, upload a skill's `SKILL.md` as knowledge.
+
+### Help Wanted
+
+The Dari and Tajik skills are drafts and need review by native speakers. Dari, Hazaragi and Tajik skills are also the hardest to find. If you write in one of them, a review or a new skill on [GitHub](https://github.com/a-ahandani/persianskills) would help more than anything else.

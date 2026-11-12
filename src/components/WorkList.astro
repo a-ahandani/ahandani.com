@@ -1,19 +1,24 @@
 ---
+import Icon from './Icon.astro';
+
 interface Item {
   name: string;
   url: string;
   role?: string;
   years: string;
   description: string;
+  post?: string | null;
 }
 
 interface Props {
   id: string;
   label: string;
   items: Item[];
+  /** Name links to the item's post; the website gets a link icon beside the year. */
+  linkIcon?: boolean;
 }
 
-const { id, label, items } = Astro.props;
+const { id, label, items, linkIcon = false } = Astro.props;
 ---
 
 <section class="name-list" aria-labelledby={`${id}-label`}>
@@ -23,7 +28,9 @@ const { id, label, items } = Astro.props;
       items.map((item) => (
         <li>
           <span class="work-name">
-            {item.url ? (
+            {linkIcon ? (
+              item.post ? <a href={`/posts/${item.post}`}>{item.name}</a> : item.name
+            ) : item.url ? (
               <a href={item.url} target="_blank" rel="noopener">
                 {item.name}
               </a>
@@ -35,7 +42,14 @@ const { id, label, items } = Astro.props;
             {item.role && <span class="work-role">{item.role}</span>}
             <span class="work-desc">{item.description}</span>
           </span>
-          <span class="work-years">{item.years}</span>
+          <span class="work-years">
+            {item.years}
+            {linkIcon && item.url && (
+              <a class="work-link" href={item.url} target="_blank" rel="noopener" aria-label={`${item.name} website`} title={`${item.name} website`}>
+                <Icon name="link" size={14} />
+              </a>
+            )}
+          </span>
         </li>
       ))
     }

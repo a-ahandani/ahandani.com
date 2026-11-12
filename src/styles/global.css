@@ -835,6 +835,18 @@ body {
   white-space: nowrap;
 }
 
+.work-link {
+  display: inline-flex;
+  margin-left: 6px;
+  vertical-align: -2px;
+  color: inherit;
+}
+
+.work-link:hover,
+.work-link:focus-visible {
+  color: var(--text);
+}
+
 .work-name a {
   color: inherit;
   text-decoration: none;

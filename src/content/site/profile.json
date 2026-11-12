@@ -66,31 +66,36 @@
       "name": "Edyt",
       "url": "https://edyt.app",
       "years": "2024",
-      "description": "AI writing assistant for macOS and Windows"
+      "description": "AI writing assistant for macOS and Windows",
+      "post": "introducing-edyt"
     },
     {
       "name": "Ramulus",
       "url": "https://a-ahandani.github.io/ramulus/",
       "years": "2026",
-      "description": "Git app for reviewing and committing the code your AI agent writes"
+      "description": "Git app for reviewing and committing the code your AI agent writes",
+      "post": "ramulus-a-git-app-for-when-your-agent-writes-the-code"
     },
     {
       "name": "persianskills",
       "url": "https://persianskills.com",
       "years": "2026",
-      "description": "Agent skills that help AI write Persian correctly for Iran, Afghanistan and Tajikistan"
+      "description": "Agent skills that help AI write Persian correctly for Iran, Afghanistan and Tajikistan",
+      "post": "persianskills-agent-skills-for-writing-persian"
     },
     {
       "name": "ah-toc",
       "url": "https://github.com/a-ahandani/ah-toc",
       "years": "2023",
-      "description": "TypeScript library that builds a table of contents from page headings"
+      "description": "TypeScript library that builds a table of contents from page headings",
+      "post": "generating-a-table-of-contents"
     },
     {
       "name": "Remixpress",
       "url": "https://github.com/a-ahandani/remixpress",
       "years": "2021",
-      "description": "Remix and GraphQL front end for WordPress as a headless CMS"
+      "description": "Remix and GraphQL front end for WordPress as a headless CMS",
+      "post": "how-to-create-a-website-using-remix-run-wordpress-and-graphql"
     },
     {
       "name": "Chargoon",

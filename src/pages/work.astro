@@ -8,6 +8,9 @@ const work = await getEntry('work', 'work');
 if (!work) throw new Error('Missing src/content/site/work.mdoc');
 const { Content } = await render(work);
 
+// Newest first by the last year in the range; projects from the same year keep their order.
+const lastYear = (years: string) => Math.max(0, ...(years.match(/\d{4}/g) ?? []).map(Number));
+const projects = [...profile.projects].sort((a, b) => lastYear(b.years) - lastYear(a.years));
 ---
 
 <Base title={work.data.title} description={work.data.description || undefined}>
@@ -22,6 +25,6 @@ const { Content } = await render(work);
     )}
 
     <WorkList id="workplaces" label="Workplaces" items={profile.workplaces} />
-    <WorkList id="projects" label="Projects" items={profile.projects} />
+    <WorkList id="projects" label="Projects" items={projects} linkIcon />
   </article>
 </Base>

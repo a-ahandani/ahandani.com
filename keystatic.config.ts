@@ -90,6 +90,7 @@ export default config({
             url: fields.text({ label: 'URL (optional)' }),
             years: fields.text({ label: 'Year' }),
             description: fields.text({ label: 'What it is' }),
+            post: fields.relationship({ label: 'Intro post (optional)', collection: 'posts' }),
           }),
           { label: 'Projects (Work page)', itemLabel: (props) => props.fields.name.value },
         ),

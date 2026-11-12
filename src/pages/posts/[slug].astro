@@ -12,10 +12,10 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props as { post: Post };
 const { Content, headings } = await render(post);
-const { title, date, excerpt, tags, cover } = post.data;
+const { title, date, excerpt, tags, cover, shareImage } = post.data;
 ---
 
-<Base title={title} description={excerpt || undefined} type="article">
+<Base title={title} description={excerpt || undefined} type="article" image={shareImage ?? cover}>
   <article class="article wrap-narrow">
     <a class="back-link" href="/writing" aria-label="All writing" title="All writing"><Icon name="arrow-left" size={17} /></a>
     <header class="article-header">

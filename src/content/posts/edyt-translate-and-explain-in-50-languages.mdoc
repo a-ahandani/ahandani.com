@@ -1,0 +1,71 @@
+---
+title: "Edyt Now Translates and Explains in 50 Languages"
+date: 2026-11-19
+excerpt: "Translate and Explain in Edyt went from 15 target languages to 50, sorted A to Z. Here is how the list was chosen and how one array now defines both the menu and the TypeScript type."
+cover: "/images/posts/edyt-fifty-languages.jpg"
+categories:
+  - "Projects"
+tags:
+  - "edyt"
+  - "typescript"
+draft: true
+---
+
+Edyt now translates and explains in 50 languages.
+
+Select some text, and Edyt can translate it or explain it in the language you pick. Until now that menu had 15 languages: English, Arabic, Spanish, Farsi, French, German, Italian, Portuguese, Turkish, Russian, Hindi, Urdu, Chinese, Japanese and Korean. It now has 50, sorted A to Z, from Albanian to Vietnamese.
+
+### How the List Was Chosen
+
+I didn't guess at which languages to add. The new list covers every language that edyt.app visitors use.
+
+Here is the full list:
+
+Albanian, Arabic, Armenian, Belarusian, Bengali, Bulgarian, Chinese (Simplified), Chinese (Traditional), Croatian, Czech, Danish, Dutch, English, Estonian, Farsi, Filipino, Finnish, French, Georgian, German, Greek, Hebrew, Hindi, Hungarian, Icelandic, Indonesian, Italian, Japanese, Kazakh, Korean, Lithuanian, Macedonian, Malay, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Sinhala, Spanish, Swahili, Swedish, Thai, Turkish, Ukrainian, Urdu, Uzbek and Vietnamese.
+
+### One List Instead of Two
+
+Before this change, the languages lived in two places: a hand-written union type with 15 codes, and a separate list of options for the menu. Adding a language meant editing both and hoping they matched.
+
+Now there is one array, and the type comes from it:
+
+```ts
+const LANGUAGES = [
+  { value: 'albanian', label: 'Albanian' },
+  { value: 'arabic', label: 'Arabic' },
+  // ...
+  { value: 'vietnamese', label: 'Vietnamese' }
+] as const
+
+export type ExplainLanguageCode = (typeof LANGUAGES)[number]['value']
+```
+
+`as const` keeps each `value` as its literal string instead of widening it to `string`, so `ExplainLanguageCode` becomes the union of all 50 codes. Add a row to the array and the type follows. There is nothing else to keep in sync.
+
+### Keeping It Sorted
+
+A menu of 50 items is only usable if it is in order. A small test checks that:
+
+```ts
+it('keeps the menu sorted by label', () => {
+  const labels = EXPLAIN_LANGUAGE_OPTIONS.map((option) => option.label)
+  assert.deepEqual(labels, [...labels].sort())
+})
+```
+
+If someone adds a language at the end of the array instead of in its place, the test fails and says so.
+
+### Saved Choices Still Work
+
+Edyt saves the language you pick. All 15 of the old codes are still in the new list, so existing choices carry over as they are. Anything that does not match a known code falls back to English instead of breaking the menu:
+
+```ts
+export function normalizeExplainLanguage(value: string | null | undefined): ExplainLanguageCode {
+  if (!value) return DEFAULT_EXPLAIN_LANGUAGE
+  return isExplainLanguageCode(value) ? value : DEFAULT_EXPLAIN_LANGUAGE
+}
+```
+
+### Try It
+
+Update Edyt, select some text, and pick Translate or Explain. If your language is still missing, let me know and I will add it. It is now a one-line change.

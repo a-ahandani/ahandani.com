@@ -1,0 +1,86 @@
+---
+title: "Why beta.10 Was Older Than beta.9"
+date: 2026-11-12
+excerpt: "My release script refused to ship Edyt 0.115.0-beta.10 because it was sure beta.10 was older than beta.9. The cause was one string comparison, and the fix is the part of the semver spec that hand-written version checks tend to skip."
+cover: "/images/posts/edyt-beta10.jpg"
+categories:
+  - "Projects"
+  - "Tutorials"
+tags:
+  - "semver"
+  - "release"
+  - "javascript"
+---
+
+My release script refused to ship Edyt 0.115.0-beta.10. It was sure beta.10 was older than beta.9.
+
+The 0.115.0 release went through sixteen betas, so this was not a corner case for long. Here is what went wrong, why it stayed hidden for nine betas, and what the fix looks like.
+
+### The Guard
+
+Before the script uploads a build, it reads the version that is already live on each platform's update feed and refuses to publish anything older. Moving a feed backwards is a real mistake, not a harmless no-op: it would offer every user on that platform a downgrade.
+
+The check runs as an inline `node -e` inside the release script. It split each version at the dash, compared major, minor and patch as numbers, and then did this with the prerelease part:
+
+```js
+const parse = (v) => {
+  const [core, pre] = String(v).split('-')
+  return { n: core.split('.').map((x) => Number.parseInt(x, 10) || 0), pre: pre || null }
+}
+// ...major, minor and patch compared as numbers...
+process.exit(b.pre && a.pre && b.pre > a.pre ? 0 : 1)
+```
+
+The core version was handled correctly. The bug was only in that last line, which compares two strings with `>`.
+
+### Why It Hid for Nine Betas
+
+Strings compare character by character. `"beta.9"` and `"beta.10"` match up to `beta.`, and then it is `"9"` against `"1"`. Since `"1"` comes before `"9"`, the string `"beta.10"` sorts before `"beta.9"`, and the guard decided the new build was older than the live one.
+
+For beta.1 through beta.9 this never mattered. Single digits sort the same way as text or as numbers, so every comparison gave the right answer. A test that checked beta.1 against beta.2 would have passed. The first comparison that could fail was beta.9 against beta.10, and from then on every beta was refused.
+
+### What Semver Actually Says
+
+Section 11 of the semver spec spells out how prerelease versions compare:
+
+1. Split the prerelease on dots and compare the parts left to right.
+2. Parts that are only digits compare as numbers.
+3. Other parts compare as text.
+4. A numeric part always sorts below a text part.
+5. If every part so far is equal, the version with more parts is newer.
+
+The fix is a small function that follows those rules:
+
+```js
+const comparePre = (left, right) => {
+  const x = left.split('.')
+  const y = right.split('.')
+  for (let i = 0; i < Math.max(x.length, y.length); i += 1) {
+    if (x[i] === undefined) return -1
+    if (y[i] === undefined) return 1
+    const xNumeric = /^[0-9]+$/.test(x[i])
+    const yNumeric = /^[0-9]+$/.test(y[i])
+    if (xNumeric && yNumeric) {
+      if (Number(x[i]) !== Number(y[i])) return Number(x[i]) > Number(y[i]) ? 1 : -1
+      continue
+    }
+    if (xNumeric !== yNumeric) return xNumeric ? -1 : 1
+    if (x[i] !== y[i]) return x[i] > y[i] ? 1 : -1
+  }
+  return 0
+}
+process.exit(b.pre && a.pre && comparePre(b.pre, a.pre) > 0 ? 0 : 1)
+```
+
+Now `beta.10` beats `beta.9`, `beta.1` beats `beta`, and `rc.1` beats `beta.12` because `rc` sorts after `beta` as text.
+
+### If You Compare Versions Yourself
+
+If your project already has a dependency manager, a semver library handles all of this and you can skip writing it. If you do compare versions by hand, in a release script, a CI step or an updater, add these cases to your tests:
+
+- `beta.9` against `beta.10`
+- `beta` against `beta.1`
+- `beta.12` against `rc.1`
+- `1.0.0-beta.3` against `1.0.0`, where the release wins
+
+The first one is the one that bit me. It is also the one that only shows up after your tenth beta, which is a long time to wait for a bug.

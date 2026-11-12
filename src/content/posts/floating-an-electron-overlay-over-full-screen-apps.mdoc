@@ -82,6 +82,5 @@ With the dashboard closed, the flip is still useful: it is part of how the app k
 - Start with `type: 'panel'` on macOS for anything that floats over other apps. It solves the full-screen case without side effects.
 - If you call `setVisibleOnAllWorkspaces` with `visibleOnFullScreen`, know that it changes your process type each time it runs.
 - If your app also has a regular window, pass `skipTransformProcessType: true` while that window is visible.
-- Apply the setting once and keep a flag, the way the guard does with `visibleOnAllWorkspacesApplied`, so a rebuild does not repeat the flip.
 
 Bugs like this one only show up with a specific mix of windows open. It was worth writing down so the next person searching for "Electron window jumps between Spaces" finds an answer.

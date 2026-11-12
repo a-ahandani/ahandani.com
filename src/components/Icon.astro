@@ -1,5 +1,5 @@
 ---
-type Name = 'github' | 'linkedin' | 'x' | 'mail' | 'arrow' | 'arrow-right' | 'arrow-left' | 'pin' | 'sun' | 'moon';
+type Name = 'github' | 'linkedin' | 'x' | 'mail' | 'arrow' | 'arrow-right' | 'arrow-left' | 'pin' | 'sun' | 'moon' | 'link';
 
 interface Props {
   name: Name;
@@ -24,6 +24,7 @@ const outline: Partial<Record<Name, string>> = {
   'arrow-right': 'M5 12h14M13 6l6 6-6 6',
   sun: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4',
   moon: 'M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z',
+  link: 'M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7',
   pin: 'M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
 };
 

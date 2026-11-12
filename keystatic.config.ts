@@ -121,6 +121,7 @@ export default config({
           itemLabel: (props) => props.value,
         }),
         cover: fields.image({ label: 'Cover image', ...images }),
+        shareImage: fields.image({ label: 'Share image (1200 × 630, used in social previews)', ...images }),
         draft: fields.checkbox({ label: 'Draft', defaultValue: false }),
         content: fields.markdoc({
           label: 'Content',

@@ -11,17 +11,19 @@ interface Props {
   title?: string;
   description?: string;
   type?: 'website' | 'article';
+  image?: string;
 }
 
 const {
   title,
   description = `${profile.name}, ${profile.role.toLowerCase()}. ${profile.intro}`,
   type = 'website',
+  image = '/meta.png',
 } = Astro.props;
 
 const pageTitle = title ? `${title} · ${profile.name}` : `${profile.name} · ${profile.role}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL('/meta.png', Astro.site);
+const ogImage = new URL(image, Astro.site);
 const path = Astro.url.pathname;
 const isHome = path === '/' || path === '/index.html';
 const edytUrl = 'https://edyt.app';

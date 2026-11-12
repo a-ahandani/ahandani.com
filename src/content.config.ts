@@ -11,6 +11,7 @@ const posts = defineCollection({
     categories: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
     cover: z.string().optional(),
+    shareImage: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

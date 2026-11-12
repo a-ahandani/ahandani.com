@@ -69,6 +69,18 @@
       "description": "AI writing assistant for macOS and Windows"
     },
     {
+      "name": "Ramulus",
+      "url": "https://a-ahandani.github.io/ramulus/",
+      "years": "2026",
+      "description": "Git app for reviewing and committing the code your AI agent writes"
+    },
+    {
+      "name": "persianskills",
+      "url": "https://persianskills.com",
+      "years": "2026",
+      "description": "Agent skills that help AI write Persian correctly for Iran, Afghanistan and Tajikistan"
+    },
+    {
       "name": "ah-toc",
       "url": "https://github.com/a-ahandani/ah-toc",
       "years": "2023",

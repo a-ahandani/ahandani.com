@@ -2,6 +2,8 @@
 title: "Introducing Edyt"
 date: 2026-05-31
 excerpt: "I have been building a macOS desktop app called Edyt. It watches for text selections in any application, shows a floating toolbar near your cursor, and lets you rewrite, explain, translate, or run custom AI prompts against the selected text. The result pastes back into the source app. No copy-paste. No switching windows."
+cover: "/images/posts/edyt.jpg"
+shareImage: "/images/posts/edyt-share.jpg"
 categories:
   - "General"
   - "Projects"
@@ -11,6 +13,20 @@ tags: []
 I have been building a macOS desktop app called Edyt. It watches for text selections in any application, shows a floating toolbar near your cursor, and lets you rewrite, explain, translate, or run custom AI prompts against the selected text. The result pastes back into the source app. No copy-paste. No switching windows.
 
 {% video src="/images/posts/hero.mp4" /%}
+
+### Update, November 2026
+
+A lot has changed since I wrote this in May.
+
+- **Windows is back.** Edyt runs on Windows 10 and later as well as on the Mac, so the pause I describe below is over.
+- **Proofread as you type.** Edyt checks each sentence as you finish it, in Mail, Slack, Notes and more, and suggests better wording.
+- **More in the toolbar.** Alternatives gives you a few versions of a sentence to pick from, and Proofread flags issues without rewriting your sentence. The toolbar opens with Control+Shift+Space.
+- **Screen Reading.** Drag over any part of the screen to read text from PDFs, pictures and anything else. On Windows, hold Alt and drag.
+- **Beyond the desktop.** Edyt Web runs in the browser, and there is a Chrome extension.
+
+I have also started writing about what I run into while building it: [why beta.10 was older than beta.9](/posts/why-beta-10-was-older-than-beta-9) and [floating an Electron overlay over full-screen apps](/posts/floating-an-electron-overlay-over-full-screen-apps).
+
+The rest of this post is as I wrote it in May.
 
 ### The Problem
 
@@ -36,9 +52,9 @@ The biggest mistake was trying to build for both Windows and macOS at the same t
 
 Permissions were a harder problem, and not for technical reasons. The app needs Accessibility and Input Monitoring access to detect selected text and paste results back. This is the same level of access that lets an app read and control your entire system. I asked myself: would *I* trust a tool like this, built by someone I do not know, with that much access?
 
-The honest answer is that I would hesitate too. That hesitation is fair. So I had to think about trust as a design constraint. The onboarding explains what each permission is for, one at a time, only after the user has seen what the app does. The initial flow used to drop people straight into a full screen permission failure before they had seen anything useful. We moved permissions into a guided step that comes after context. You should know what you are giving access to and why.
+The honest answer is that I would hesitate too. That hesitation is fair. So I had to think about trust as a design constraint. The onboarding explains what each permission is for, one at a time, only after the user has seen what the app does. The initial flow used to drop people straight into a full screen permission failure before they had seen anything useful. I moved permissions into a guided step that comes after context. You should know what you are giving access to and why.
 
-### Current State
+### Where It Stood in May
 
 Edyt is live at [edyt.app](https://edyt.app). The macOS app is downloadable for Apple Silicon. The toolbar does four things: Rewrite, Explain, Translate, and Use Prompt, each configurable with your own prompt text. Login goes through OAuth and results stream back to the app.
 
